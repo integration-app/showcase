@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { PersonalTokenButton } from "@/components/personal-token-button"
 
 export function Header() {
   const [mounted, setMounted] = useState(false)
@@ -50,7 +51,7 @@ export function Header() {
               </Link>
             </div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2">
             {mounted && (
               <Button
                 variant="ghost"
@@ -65,6 +66,7 @@ export function Header() {
                 )}
               </Button>
             )}
+            {mounted && <PersonalTokenButton />}
           </div>
         </div>
       </nav>

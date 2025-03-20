@@ -4,6 +4,7 @@ import { Header } from "@/components/header"
 import { inter } from "@/app/fonts"
 import { IntegrationProvider } from "./integration-provider"
 import { AuthProvider } from "./auth-provider"
+import { TokenProvider } from "./token-provider"
 
 export const metadata = {
   title: {
@@ -24,14 +25,16 @@ export default function RootLayout({
         className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>
-            <IntegrationProvider>
-              <Header />
-              <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                {children}
-              </main>
-            </IntegrationProvider>
-          </AuthProvider>
+          <TokenProvider>
+            <AuthProvider>
+              <IntegrationProvider>
+                <Header />
+                <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                  {children}
+                </main>
+              </IntegrationProvider>
+            </AuthProvider>
+          </TokenProvider>
         </ThemeProvider>
       </body>
     </html>
