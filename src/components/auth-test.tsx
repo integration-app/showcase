@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { useAuth } from "@/app/auth-provider"
+import { useCustomer } from "@/components/providers/customer-provider"
 
 export function AuthTest() {
-  const { customerId, customerName, setCustomerName } = useAuth()
+  const { customerId, customerName, setCustomerName } = useCustomer()
   const [nameInput, setNameInput] = useState("")
 
   return (

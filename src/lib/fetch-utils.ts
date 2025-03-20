@@ -1,7 +1,8 @@
-import { ensureAuth } from './auth';
+import { getPersonalAccessToken } from '@/components/providers/console-auth-provider';
+import { ensureCustomerDetails } from './customer-details-storage';
 
 export const getAuthHeaders = () => {
-  const auth = ensureAuth();
+  const auth = ensureCustomerDetails();
   return {
     'x-auth-id': auth.customerId,
     'x-customer-name': auth.customerName || '',
@@ -26,7 +27,7 @@ export const engineApiAdminFetcher = async <T>(path: string): Promise<T> => {
   const url = new URL(path, process.env.NEXT_PUBLIC_INTEGRATION_APP_API_URL)
   const res = await fetch(url, {
     headers: {
-
+      'Authorization': `Bearer ${getPersonalAccessToken()}` 
     },
   });
 

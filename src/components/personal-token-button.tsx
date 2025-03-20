@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
-import { useToken } from "@/app/token-provider"
+import { useConsoleAuth } from "@/components/providers/console-auth-provider"
 import { useRouter } from "next/navigation"
 
 export function PersonalTokenButton() {
-  const { hasToken, clearToken } = useToken()
+  const { hasToken, clearToken } = useConsoleAuth()
   const router = useRouter()
 
   const handleLogout = () => {

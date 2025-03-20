@@ -1,5 +1,5 @@
 import jwt, { Algorithm } from 'jsonwebtoken';
-import type { AuthCustomer } from './auth';
+import type { CustomerDetails } from './customer-details-storage';
 
 // Your workspace credentials from Integration.app settings page
 const WORKSPACE_KEY = process.env.INTEGRATION_APP_WORKSPACE_KEY;
@@ -17,7 +17,8 @@ export class IntegrationTokenError extends Error {
   }
 }
 
-export async function generateIntegrationToken(auth: AuthCustomer): Promise<string> {
+// TODO: keys should be received and not from env file
+export async function generateIntegrationToken(auth: CustomerDetails): Promise<string> {
   if (!WORKSPACE_KEY || !WORKSPACE_SECRET) {
     throw new IntegrationTokenError('Integration.app credentials not configured');
   }
