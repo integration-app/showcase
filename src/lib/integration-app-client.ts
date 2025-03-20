@@ -20,6 +20,7 @@ export async function getIntegrationClient(auth: AuthCustomer): Promise<Integrat
     // We create a new instance each time to ensure we're using a fresh token
     const client = new IntegrationAppClient({
       token,
+      apiUri: process.env.NEXT_PUBLIC_INTEGRATION_APP_API_URL,
     });
 
     return client;
@@ -47,4 +48,4 @@ export async function getSharedIntegrationClient(auth: AuthCustomer): Promise<In
  */
 export function resetSharedIntegrationClient(): void {
   clientInstance = null;
-} 
+}

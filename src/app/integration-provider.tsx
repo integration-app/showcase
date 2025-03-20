@@ -20,7 +20,7 @@ export function IntegrationProvider({
   }
 
   return (
-    <IntegrationAppProvider fetchToken={fetchToken}>
+    <IntegrationAppProvider fetchToken={fetchToken} apiUri={process.env.NEXT_PUBLIC_INTEGRATION_APP_API_URL}>
       {children}
     </IntegrationAppProvider>
   )

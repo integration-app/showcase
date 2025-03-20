@@ -5,7 +5,7 @@ import type { Integration as IntegrationAppIntegration } from "@integration-app/
 
 export function IntegrationList() {
   const integrationApp = useIntegrationApp()
-  const { integrations, refresh } = useIntegrations()
+  const { integrations, refresh, loading } = useIntegrations()
 
   const handleConnect = async (integration: IntegrationAppIntegration) => {
     try {
@@ -28,6 +28,8 @@ export function IntegrationList() {
 
   return (
     <ul className="space-y-4 mt-8">
+      {loading && <span>Loading</span>}
+      {!loading && !integrations.length && <span>No integrations found</span>}
       {integrations.map((integration) => (
         <li
           key={integration.key}

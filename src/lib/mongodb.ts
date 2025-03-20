@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import fs from 'fs';
+import path from 'path';
 
 interface MongooseCache {
   conn: typeof mongoose | null;
@@ -8,12 +11,6 @@ interface MongooseCache {
 declare global {
   // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
-}
-
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error('MONGODB_URI environment variable is not defined. Please set it in your .env file.');
 }
 
 const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
@@ -27,13 +24,24 @@ async function connectDB(): Promise<typeof mongoose> {
     return cached.conn;
   }
 
+  const dataPath = path.resolve('./data');
+  if (!fs.existsSync(dataPath)) {
+      fs.mkdirSync(dataPath, { recursive: true });
+  }
+
+  const mongod = await MongoMemoryServer.create({
+    instance: { dbPath: './data', storageEngine: 'wiredTiger' }
+  });
+
+  const uri = mongod.getUri();
+
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      useUnifiedTopology: true
     };
 
-    // We know MONGODB_URI is defined here because we checked above
-    cached.promise = mongoose.connect(MONGODB_URI as string, opts);
+    cached.promise = mongoose.connect(uri, opts);
   }
 
   try {
@@ -46,4 +54,4 @@ async function connectDB(): Promise<typeof mongoose> {
   return cached.conn;
 }
 
-export default connectDB; 
+export default connectDB;
