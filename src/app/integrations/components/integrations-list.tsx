@@ -33,9 +33,9 @@ export function IntegrationList() {
       {integrations.map((integration) => (
         <li
           key={integration.key}
-          className="group flex items-center space-x-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow"
+          className="group flex items-center space-x-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm"
         >
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             {integration.logoUri ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
