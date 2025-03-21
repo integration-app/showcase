@@ -31,12 +31,11 @@ yarn install
 cp .env-sample .env
 ```
 
-4. Edit `.env` and add your Integration.app credentials:
+4. Edit `.env` and add your Integration.app endpoints for API and IO:
 
 ```env
-INTEGRATION_APP_WORKSPACE_KEY=your_workspace_key_here
-INTEGRATION_APP_WORKSPACE_SECRET=your_workspace_secret_here
-MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_INTEGRATION_APP_API_URL=http://localhost:9000/
+NEXT_PUBLIC_INTEGRATION_APP_UI_URL=http://localhost:3001/
 ```
 
 You can find these credentials in your Integration.app workspace settings.

@@ -31,8 +31,8 @@ export function CustomerProvider({ children }: { children: React.ReactNode }) {
   const setCustomerName = (name: string) => {
     if (!details) return
     const newDetails = { ...details, customerName: name }
-    // TODO: ping API to update the name immediately
     storeCustomerDetails(newDetails)
+    // TODO: ping API to update the name immediately
     setCustomerDetails(newDetails)
   }
 

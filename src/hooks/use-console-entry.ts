@@ -11,8 +11,8 @@ export function useConsoleEntry(): Partial<ConsoleEntry> & {
   const { token } = useConsoleAuth()
 
   const { data, error, isLoading } = useSWR<ConsoleEntry>(
-    token ? "/console-self" : null,
-    (url) => engineApiAdminFetcher<ConsoleEntry>(url),
+    token ? ["/console-self", token] : null,
+    ([url]) => engineApiAdminFetcher<ConsoleEntry>(url),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,

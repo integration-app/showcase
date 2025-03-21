@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import { User } from '@/models/user';
 import { getAuthFromRequest } from '@/lib/server-auth';
-import { getIntegrationClient } from '@/lib/integration-app-client';
+import { getIntegrationAppClient } from '@/lib/server-only/integration-app-client';
 
 interface ExternalUser {
   id: string;
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     // 1. Get Integration.app client
-    const client = await getIntegrationClient(auth);
+    const client = await getIntegrationAppClient(auth);
 
     // 2. Find the first available connection
     const connectionsResponse = await client.connections.find();

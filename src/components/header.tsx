@@ -6,7 +6,8 @@ import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { PersonalTokenButton } from "@/components/personal-token-button"
+import { UnAuthButton } from "@/components/personal-token-button"
+import { WorkspaceSelect } from "./workspace-select"
 
 export function Header() {
   const [mounted, setMounted] = useState(false)
@@ -52,6 +53,7 @@ export function Header() {
             </div>
           </div>
           <div className="flex items-center space-x-2">
+            <WorkspaceSelect />
             {mounted && (
               <Button
                 variant="ghost"
@@ -66,7 +68,7 @@ export function Header() {
                 )}
               </Button>
             )}
-            {mounted && <PersonalTokenButton />}
+            <UnAuthButton />
           </div>
         </div>
       </nav>

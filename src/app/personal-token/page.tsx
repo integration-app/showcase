@@ -37,7 +37,11 @@ export default function PersonalTokenPage() {
     token: storedToken,
     hasToken,
   } = useConsoleAuth();
-  const { workspaces = [], isError: workspacesError } = useConsoleEntry();
+  const {
+    workspaces = [],
+    isError: workspacesError,
+    isLoading: workspaceLoading,
+  } = useConsoleEntry();
   const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
 
   const [token, setToken] = useState(storedToken || "");
@@ -169,14 +173,23 @@ export default function PersonalTokenPage() {
               {workspacesError && (
                 <Alert variant="destructive" className="mb-4">
                   <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>Failed to fetch workspaces</AlertDescription>
+                  <AlertDescription>
+                    Failed to fetch workspaces, check if token is correct
+                  </AlertDescription>
                 </Alert>
               )}
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="workspace">Workspace</Label>
-                  <Select value={workspaceId} onValueChange={setWorkspaceId}>
-                    <SelectTrigger id="workspace">
+
+              <div className="grid gap-2">
+                <Label htmlFor="workspace">Workspace</Label>
+                <Select
+                    value={workspaceId}
+                    onValueChange={(id) => {
+                      setWorkspaceId(id);
+                      setError(null);
+                    }}
+                    disabled={workspacesError || workspaceLoading}
+                  >
+                    <SelectTrigger id="workspace" className="w-full" loading={workspaceLoading}>
                       <SelectValue placeholder="Select a workspace" />
                     </SelectTrigger>
                     <SelectContent>
@@ -187,15 +200,19 @@ export default function PersonalTokenPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
               </div>
             </CardContent>
             <CardFooter className="flex justify-between gap-2">
-              <Button type="button" variant="outline" onClick={goBack}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={goBack}
+                className="flex-1"
+              >
                 Back
               </Button>
-              <Button type="submit" className="flex-1">
-                Submit
+              <Button type="submit" className="flex-3">
+                Continue
               </Button>
             </CardFooter>
           </Card>

@@ -8,7 +8,6 @@ import {
   ReactNode,
   useCallback,
 } from "react";
-import { ProtectedRoute } from "../../app/protected-route";
 
 const TOKEN_KEY = "personal_token";
 

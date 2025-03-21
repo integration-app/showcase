@@ -13,7 +13,6 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   const isTokenPage = pathname === "/personal-token";
   const hasNecessaryDetails = !!hasToken && !!workspace;
-  console.log('hasNecessaryDetails: ', hasNecessaryDetails, hasToken, workspace);
 
   useEffect(() => {
     if (!hasNecessaryDetails && !isTokenPage && typeof window !== "undefined") {
@@ -24,3 +23,4 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   return hasNecessaryDetails || isTokenPage ? <>{children}</> : null;
 }
+ 

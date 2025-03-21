@@ -1,8 +1,6 @@
 import { IntegrationAppClient } from '@integration-app/sdk';
-import { generateIntegrationToken } from './integration-token';
-import type { CustomerDetails } from './customer-details-storage';
-
-let clientInstance: IntegrationAppClient | null = null;
+import { WorkspaceAuthDetails, generateIntegrationToken } from '../integration-token';
+import type { CustomerDetails } from '../customer-details-storage';
 
 export class IntegrationClientError extends Error {
   constructor(message: string) {
@@ -11,7 +9,7 @@ export class IntegrationClientError extends Error {
   }
 }
 
-export async function getIntegrationClient(auth: CustomerDetails): Promise<IntegrationAppClient> {
+export async function getIntegrationAppClient(auth: CustomerDetails & WorkspaceAuthDetails): Promise<IntegrationAppClient> {
   try {
     // Generate a fresh token for the customer
     const token = await generateIntegrationToken(auth);
@@ -21,6 +19,7 @@ export async function getIntegrationClient(auth: CustomerDetails): Promise<Integ
     const client = new IntegrationAppClient({
       token,
       apiUri: process.env.NEXT_PUBLIC_INTEGRATION_APP_API_URL,
+      uiUri: process.env.NEXT_PUBLIC_INTEGRATION_APP_UI_URL
     });
 
     return client;
@@ -30,22 +29,4 @@ export async function getIntegrationClient(auth: CustomerDetails): Promise<Integ
       error instanceof Error ? error.message : 'Failed to initialize Integration.app client'
     );
   }
-}
-
-/**
- * Use this when you need to ensure a single client instance is reused
- * Note: The token used will be from when the client was first initialized
- */
-export async function getSharedIntegrationClient(auth: CustomerDetails): Promise<IntegrationAppClient> {
-  if (!clientInstance) {
-    clientInstance = await getIntegrationClient(auth);
-  }
-  return clientInstance;
-}
-
-/**
- * Reset the shared client instance, forcing a new one to be created next time
- */
-export function resetSharedIntegrationClient(): void {
-  clientInstance = null;
 }
