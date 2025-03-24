@@ -19,7 +19,6 @@ const mapping: Record<string, string> = {
 
 export const Breadcrumbs = () => {
   const segments = useSelectedLayoutSegments()
-  console.log(segments)
   const patched = ['', ...segments]
 
   return (
