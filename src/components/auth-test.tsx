@@ -1,11 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import { useCustomer } from "@/components/providers/customer-provider"
 
 export function AuthTest() {
-  const { customerId, customerName, setCustomerName } = useCustomer()
-  const [nameInput, setNameInput] = useState("")
+  const { customerId, customerName } = useCustomer()
 
   return (
     <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg space-y-4">
@@ -19,27 +17,6 @@ export function AuthTest() {
           Customer ID: {customerId || "Loading..."}
         </p>
         <p>Name: {customerName || "Not set"}</p>
-      </div>
-
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
-          placeholder="Enter customer name"
-          className="px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400"
-        />
-        <button
-          onClick={() => {
-            if (nameInput.trim()) {
-              setCustomerName(nameInput.trim())
-              setNameInput("")
-            }
-          }}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          Update Name
-        </button>
       </div>
     </div>
   )

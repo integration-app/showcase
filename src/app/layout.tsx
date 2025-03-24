@@ -1,12 +1,8 @@
 import "./globals.css";
-import { ThemeProvider } from "@/app/providers";
-import { Header } from "@/components/header";
-import { inter } from "@/app/fonts";
-import { IntegrationProvider } from "../components/providers/integration-provider";
-import { CustomerProvider } from "../components/providers/customer-provider";
-import { ConsoleAuthProvider } from "../components/providers/console-auth-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { inter } from "@/lib/fonts";
+import { ConsoleAuthProvider } from "@/components/providers/console-auth-provider";
 import { WorkspaceProvider } from "@/components/providers/workspace-provider";
-import { ProtectedRoute } from "./protected-route";
 
 export const metadata = {
   title: {
@@ -29,16 +25,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ConsoleAuthProvider>
             <WorkspaceProvider>
-              <ProtectedRoute>
-                <CustomerProvider>
-                  <Header />
-                  <IntegrationProvider>
-                    <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                      {children}
-                    </main>
-                  </IntegrationProvider>
-                </CustomerProvider>
-              </ProtectedRoute>
+              {children}
             </WorkspaceProvider>
           </ConsoleAuthProvider>
         </ThemeProvider>

@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname, useRouter } from "next/navigation";
-import { useConsoleAuth } from "../components/providers/console-auth-provider";
+import { useConsoleAuth } from "@/components/providers/console-auth-provider";
 import { ReactNode, useEffect } from "react";
 import { useCurrentWorkspace } from "@/components/providers/workspace-provider";
 
@@ -23,4 +23,3 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   return hasNecessaryDetails || isTokenPage ? <>{children}</> : null;
 }
- 

@@ -2,8 +2,9 @@ export interface ConsoleEntry {
     user: User
     workspace: Workspace
     workspaces: Workspace[]
+    workspaceUser: WorkspaceUser
   }
-  
+
   interface User {
     id: string
     auth0Id: string
@@ -13,7 +14,7 @@ export interface ConsoleEntry {
     pat: string
     introVideoStatus: string
   }
-  
+
   interface Workspace {
     id: string
     key: string
@@ -22,4 +23,9 @@ export interface ConsoleEntry {
     secret: string
     createdAt: string
     updatedAt: string
+  }
+
+  interface WorkspaceUser {
+    id: string
+    testCustomerId: string
   }

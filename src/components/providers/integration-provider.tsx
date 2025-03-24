@@ -1,10 +1,11 @@
 "use client";
 
 import { IntegrationAppProvider } from "@integration-app/react";
-import { getUserAuthHeaders } from "./customer-provider";
+import { useCustomer } from "./customer-provider";
 import { getWorkspaceHeaders } from "@/lib/workspace-storage";
 import { useCurrentWorkspace } from "./workspace-provider";
 import { SWRConfig } from "swr";
+import { buildAuthHeaders } from "@/lib/fetch-utils";
 
 export function IntegrationProvider({
   children,
@@ -12,11 +13,12 @@ export function IntegrationProvider({
   children: React.ReactNode;
 }) {
   const { workspace } = useCurrentWorkspace();
+  const { customerId, customerName } = useCustomer();
 
   const fetchToken = async () => {
     const response = await fetch("/api/integration-token", {
       headers: {
-        ...getUserAuthHeaders(),
+        ...buildAuthHeaders({ customerId, customerName}),
         ...getWorkspaceHeaders(),
       },
     });

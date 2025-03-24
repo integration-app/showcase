@@ -1,9 +1,10 @@
-import { AuthTest } from "@/components/auth-test"
-import { Metadata } from "next"
+import { AuthTest } from "@/components/auth-test";
+import { Metadata } from "next";
+import { OpenClient } from "../open-client";
 
 export const metadata: Metadata = {
   title: "Overview",
-}
+};
 
 export default function HomePage() {
   return (
@@ -18,7 +19,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      <OpenClient />
       <AuthTest />
     </div>
-  )
+  );
 }

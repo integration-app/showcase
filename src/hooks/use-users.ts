@@ -1,11 +1,14 @@
 import useSWR from 'swr';
 import { UsersResponse } from '@/types/user';
-import { authenticatedFetcher, getAuthHeaders } from '@/lib/fetch-utils';
+import { authenticatedFetcher, buildAuthHeaders } from '@/lib/fetch-utils';
+import { useCustomer } from '@/components/providers/customer-provider';
 
 export function useUsers() {
+  const { customerId, customerName } = useCustomer()
+
   const { data, error, isLoading, mutate } = useSWR<UsersResponse>(
     '/api/users',
-    (url) => authenticatedFetcher<UsersResponse>(url),
+    (url) => authenticatedFetcher<UsersResponse>(url, { customerId, customerName }),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
@@ -16,7 +19,7 @@ export function useUsers() {
     try {
       const response = await fetch('/api/users/import', {
         method: 'POST',
-        headers: getAuthHeaders(),
+        headers: buildAuthHeaders({ customerId, customerName }),
       });
 
       if (!response.ok) {
@@ -40,4 +43,4 @@ export function useUsers() {
     mutate,
     importUsers,
   };
-} 
+}

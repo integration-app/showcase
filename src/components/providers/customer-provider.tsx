@@ -1,19 +1,17 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react"
-import type { CustomerDetails } from "@/lib/customer-details-storage"
-import { ensureCustomerDetails, storeCustomerDetails } from "@/lib/customer-details-storage"
+import { createContext, useContext } from "react"
+import { useConsoleEntry } from "@/hooks/use-console-entry"
+import { Loader, CircleX } from "lucide-react"
 
-interface CustomerContextType {
-  customerId: string | null
-  customerName: string | null
-  setCustomerName: (name: string) => void
+export interface CurrentCustomer {
+  customerId: string | undefined
+  customerName: string | undefined
 }
 
-const CustomerContext = createContext<CustomerContextType>({
-  customerId: null,
-  customerName: null,
-  setCustomerName: () => {},
+const CustomerContext = createContext<CurrentCustomer>({
+  customerId: undefined,
+  customerName: undefined,
 })
 
 export function useCustomer() {
@@ -21,39 +19,33 @@ export function useCustomer() {
 }
 
 export function CustomerProvider({ children }: { children: React.ReactNode }) {
-  const [details, setCustomerDetails] = useState<CustomerDetails | null>(null)
+  const { user, isLoading, isError } = useConsoleEntry();
 
-  useEffect(() => {
-    const currentDetails = ensureCustomerDetails()
-    setCustomerDetails(currentDetails)
-  }, [])
+  if (isLoading) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center flex-col gap-4">
+        <Loader className="size-14 opacity-50 animate-spin" />
+        <h1 className="text-xl">Loading</h1>
+    </div>)
+  }
 
-  const setCustomerName = (name: string) => {
-    if (!details) return
-    const newDetails = { ...details, customerName: name }
-    storeCustomerDetails(newDetails)
-    // TODO: ping API to update the name immediately
-    setCustomerDetails(newDetails)
+  if (!isLoading && isError) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center flex-col gap-4">
+        <CircleX className="size-14" />
+        <h1 className="text-xl">Failed to load customer</h1>
+      </div>
+    )
   }
 
   return (
     <CustomerContext.Provider
       value={{
-        customerId: details?.customerId ?? null,
-        customerName: details?.customerName ?? null,
-        setCustomerName,
+        customerId: user?.id ?? undefined,
+        customerName: user?.name ?? undefined,
       }}
     >
       {children}
     </CustomerContext.Provider>
   )
-}
-
-// Helper function to get auth headers for API calls
-export function getUserAuthHeaders(): HeadersInit {
-  const details = ensureCustomerDetails()
-  return {
-    "x-auth-id": details.customerId,
-    "x-customer-name": details.customerName || "",
-  }
 }

@@ -1,17 +1,22 @@
 import { getPersonalAccessToken } from '@/components/providers/console-auth-provider';
-import { ensureCustomerDetails } from './customer-details-storage';
+import { CurrentCustomer } from '@/components/providers/customer-provider';
 
-export const getAuthHeaders = () => {
-  const auth = ensureCustomerDetails();
+export const buildAuthHeaders = (
+  { customerId, customerName }: CurrentCustomer
+) => {
   return {
-    'x-auth-id': auth.customerId,
-    'x-customer-name': auth.customerName || '',
+    'x-auth-id': customerId ?? '',
+    'x-customer-name': customerName ?? '',
   };
 };
 
-export const authenticatedFetcher = async <T>(url: string): Promise<T> => {
+export const authenticatedFetcher = async <T>(
+  url: string,
+  userDetails: CurrentCustomer
+): Promise<T> => {
+
   const res = await fetch(url, {
-    headers: getAuthHeaders(),
+    headers: buildAuthHeaders(userDetails)
   });
 
   if (!res.ok) {
@@ -23,16 +28,16 @@ export const authenticatedFetcher = async <T>(url: string): Promise<T> => {
   return res.json();
 };
 
-export const engineApiAdminFetcher = async <T>(path: string): Promise<T> => {
+export const personalAccessTokenAuthFetcher = async <T>(path: string): Promise<T> => {
   const url = new URL(path, process.env.NEXT_PUBLIC_INTEGRATION_APP_API_URL)
   const res = await fetch(url, {
     headers: {
-      'Authorization': `Bearer ${getPersonalAccessToken()}` 
+      'Authorization': `Bearer ${getPersonalAccessToken()}`
     },
   });
 
   if (!res.ok) {
-    const error = new Error('Admin request: An error occurred while fetching the data.') as Error & { status?: number };
+    const error = new Error('PAT Auth request: An error occurred while fetching the data.') as Error & { status?: number };
     error.status = res.status;
     throw error;
   }
