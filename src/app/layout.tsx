@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        className={`${inter.className} antialiased min-h-svh bg-background`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ConsoleAuthProvider>
