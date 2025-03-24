@@ -1,14 +1,7 @@
 import { IntegrationProvider } from "@/components/providers/integration-provider";
 import { CustomerProvider } from "@/components/providers/customer-provider";
 import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+
 import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,
@@ -16,6 +9,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { ProtectedRoute } from "./protected-route";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const metadata = {
   title: {
@@ -30,6 +24,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <ProtectedRoute>
       <CustomerProvider>
@@ -44,20 +39,7 @@ export default function RootLayout({
                     orientation="vertical"
                     className="mr-2 data-[orientation=vertical]:h-4"
                   />
-                  <Breadcrumb>
-                    <BreadcrumbList>
-                      <BreadcrumbItem className="hidden md:block">
-                        <BreadcrumbLink href="#">
-                          Building Your Application
-                        </BreadcrumbLink>
-                      </BreadcrumbItem
-                      >
-                      <BreadcrumbSeparator className="hidden md:block" />
-                      <BreadcrumbItem>
-                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                      </BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
+                  <Breadcrumbs />
                 </div>
               </header>
               <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
