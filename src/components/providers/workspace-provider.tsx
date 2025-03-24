@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { createContext, useCallback, useContext, useState } from "react"
 import { ConsoleEntry } from "@/types/console-entry"
 import { getStoredWorkspace, storeWorkspace, clearWorkspaceStorage } from "@/lib/workspace-storage"
 
@@ -21,14 +21,7 @@ export function useCurrentWorkspace() {
 }
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
-  const [workspace, setWorkspace] = useState<WorkspaceContextType['workspace']>(null)
-
-  useEffect(() => {
-    const workspace = getStoredWorkspace()
-    if (workspace) {
-      setWorkspace(workspace)
-    }
-  }, [])
+  const [workspace, setWorkspace] = useState<WorkspaceContextType['workspace']>(getStoredWorkspace())
 
   const saveWorkspace = useCallback((workspace: WorkspaceContextType['workspace']) => {
     if (!workspace) return
