@@ -56,16 +56,9 @@ export default function PersonalTokenPage() {
 
   useEffect(() => {
     if (hasToken && currentWorkspace) {
-      console.log('do redirect')
       router.push(fromPath);
     }
   }, [hasToken, currentWorkspace, router, fromPath]);
-
-  useEffect(() => {
-    return () => {
-      console.log('unmount')
-    }
-  }, []);
 
   const handleTokenSubmit = (e: React.FormEvent) => {
     e.preventDefault();
