@@ -4,16 +4,40 @@ import * as React from "react"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
 import { cn } from "@/lib/utils"
+import { cva, VariantProps } from "class-variance-authority"
+
+const avatarVariants = cva(
+  "relative flex shrink-0 overflow-hidden",
+  {
+    variants: {
+      variant: {
+        round: "rounded-full",
+        square: "rounded-lg",
+      },
+      size: {
+        default: "size-8",
+        sm: "size-6",
+        lg: "size-10",
+      },
+    },
+    defaultVariants: {
+      variant: "round",
+      size: "default",
+    },
+  }
+)
 
 function Avatar({
   className,
+  variant,
+  size,
   ...props
-}: React.ComponentProps<typeof AvatarPrimitive.Root>) {
+}: React.ComponentProps<typeof AvatarPrimitive.Root> & VariantProps<typeof avatarVariants>) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
       className={cn(
-        "relative flex size-8 shrink-0 overflow-hidden rounded-full",
+        avatarVariants({ variant, size }),
         className
       )}
       {...props}
@@ -42,7 +66,7 @@ function AvatarFallback({
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
+        "bg-muted flex size-full items-center justify-center rounded-lg",
         className
       )}
       {...props}
