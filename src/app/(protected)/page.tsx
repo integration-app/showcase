@@ -1,4 +1,3 @@
-import { AuthTest } from "@/components/auth-test";
 import { Metadata } from "next";
 import { OpenClient } from "../open-client";
 
@@ -21,7 +20,6 @@ export default function HomePage() {
       </div>
 
       <OpenClient />
-      <AuthTest />
     </div>
   );
 }
