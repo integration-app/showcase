@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { inter } from "@/lib/fonts";
 import { ConsoleAuthProvider } from "@/components/providers/console-auth-provider";
 import { WorkspaceProvider } from "@/components/providers/workspace-provider";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const metadata = {
   title: {
@@ -26,6 +27,7 @@ export default function RootLayout({
           <ConsoleAuthProvider>
             <WorkspaceProvider>
               {children}
+              <ModeToggle />
             </WorkspaceProvider>
           </ConsoleAuthProvider>
         </ThemeProvider>
