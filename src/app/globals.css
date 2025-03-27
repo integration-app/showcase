@@ -1,5 +1,17 @@
 @import 'tailwindcss';
 
+@layer base {
+  @layer iap_reset, iap_base, iap_tokens;
+}
+
+@layer components {
+  @layer defaults, styling, elements, application;
+}
+
+@layer utilities {
+  @layer old_console_styles, iap_recipes, iap_utilities;
+}
+
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -26,6 +38,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -61,6 +74,7 @@
   --accent: oklch(0.967 0.001 286.375);
   --accent-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325);
+  --success: oklch(0.577 0.245 140);
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
