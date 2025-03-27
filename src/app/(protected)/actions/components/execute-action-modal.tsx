@@ -22,6 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { OpenGhButton } from "@/components/open-gh-button"
 
 export function ExecuteActionModal({
   id,
@@ -81,7 +82,10 @@ export function ExecuteActionModal({
     })} modal>
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Run action: {action?.name}</DialogTitle>
+          <div className="flex flex-row justify-between pr-4 items-baseline">
+            <DialogTitle>Run action: {action?.name}</DialogTitle>
+            <OpenGhButton metaUrl={import.meta.url} />
+          </div>
 
           {!actionLoading && !actionError && !action?.inputSchema && (
             <Alert className="mt-2">

@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
@@ -21,31 +20,29 @@ export function ActionConnections({ id }: {id: string}) {
 
   return (
     <div  className="flex flex-row -space-x-1">
-      <TooltipProvider>
-        {integrations.map((integration) => (
-          <Tooltip key={integration.id}>
-            <TooltipTrigger asChild>
-              <Avatar size='sm' className="ring-1 ring-border">
-                <AvatarImage src={integration.logoUri} />
-                <AvatarFallback size='sm'>{integration.name[0]}</AvatarFallback>
-              </Avatar>
-            </TooltipTrigger>
-            <TooltipContent>
-              {integration.name}
-            </TooltipContent>
-          </Tooltip>
-        ))}
+      {integrations.map((integration) => (
+        <Tooltip key={integration.id}>
+          <TooltipTrigger asChild>
+            <Avatar size='sm' className="ring-1 ring-border">
+              <AvatarImage src={integration.logoUri} />
+              <AvatarFallback size='sm'>{integration.name[0]}</AvatarFallback>
+            </Avatar>
+          </TooltipTrigger>
+          <TooltipContent>
+            {integration.name}
+          </TooltipContent>
+        </Tooltip>
+      ))}
 
-        {hasMore && (
-          <Avatar size='sm' className="ring-1 ring-border">
-            <AvatarFallback size='sm'>+{lengthDiff}</AvatarFallback>
-          </Avatar>
-        )}
+      {hasMore && (
+        <Avatar size='sm' className="ring-1 ring-border">
+          <AvatarFallback size='sm'>+{lengthDiff}</AvatarFallback>
+        </Avatar>
+      )}
 
-        {!integrations.length && !loading && (
-          <Badge variant='outline'>None</Badge>
-        )}
-      </TooltipProvider>
+      {!integrations.length && !loading && (
+        <Badge variant='outline'>None</Badge>
+      )}
     </div>
   );
 }
