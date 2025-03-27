@@ -1,9 +1,11 @@
-import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { inter } from "@/lib/fonts";
 import { ConsoleAuthProvider } from "@/components/providers/console-auth-provider";
 import { WorkspaceProvider } from "@/components/providers/workspace-provider";
 import { ModeToggle } from "@/components/mode-toggle";
+
+import "./globals.css";
+import '@integration-app/react/styles.css'
 
 export const metadata = {
   title: {

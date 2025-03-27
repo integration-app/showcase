@@ -7,7 +7,8 @@ import {
   GalleryVerticalEnd,
   LayoutDashboard,
   Blocks,
-  Users
+  Users,
+  Activity
 } from "lucide-react"
 
 import { NavProjects } from "@/components/nav-projects"
@@ -54,6 +55,11 @@ const data = {
       name: "Integrations",
       url: "/integrations",
       icon: Blocks,
+    },
+    {
+      name: "Actions",
+      url: "/actions",
+      icon: Activity,
     },
     {
       name: "Users",

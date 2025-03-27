@@ -15,6 +15,7 @@ const mapping: Record<string, string> = {
   '': 'Showcase',
   'integrations': 'Integrations',
   'users': 'Users',
+  'actions': 'Actions'
 }
 
 export const Breadcrumbs = () => {
