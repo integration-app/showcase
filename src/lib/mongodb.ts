@@ -26,11 +26,11 @@ async function connectDB(): Promise<typeof mongoose> {
 
   const dataPath = path.resolve('./data');
   if (!fs.existsSync(dataPath)) {
-      fs.mkdirSync(dataPath, { recursive: true });
+    fs.mkdirSync(dataPath, { recursive: true });
   }
 
   const mongod = await MongoMemoryServer.create({
-    instance: { dbPath: './data', storageEngine: 'wiredTiger' }
+    instance: { dbPath: './data', storageEngine: 'wiredTiger' },
   });
 
   const uri = mongod.getUri();
@@ -38,7 +38,7 @@ async function connectDB(): Promise<typeof mongoose> {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     };
 
     cached.promise = mongoose.connect(uri, opts);

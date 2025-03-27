@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -7,9 +7,9 @@ import {
   useState,
   ReactNode,
   useCallback,
-} from "react";
+} from 'react';
 
-const TOKEN_KEY = "personal_token";
+const TOKEN_KEY = 'personal_token';
 
 interface ConsoleAuthContextType {
   token: string | null;
@@ -35,22 +35,25 @@ export function ConsoleAuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Initialize token from localStorage on mount
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const storedToken = localStorage.getItem(TOKEN_KEY);
       setTokenState(storedToken);
       setIsLoading(false);
     }
   }, []);
 
-  const setToken = useCallback((newToken: string) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(TOKEN_KEY, newToken);
-      setTokenState(newToken);
-    }
-  }, [setTokenState]);
+  const setToken = useCallback(
+    (newToken: string) => {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(TOKEN_KEY, newToken);
+        setTokenState(newToken);
+      }
+    },
+    [setTokenState],
+  );
 
   const clearToken = useCallback(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       localStorage.removeItem(TOKEN_KEY);
       setTokenState(null);
     }
@@ -71,11 +74,11 @@ export function ConsoleAuthProvider({ children }: { children: ReactNode }) {
 }
 
 export function getPersonalAccessToken(): string | null {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null;
   return localStorage.getItem(TOKEN_KEY);
 }
 
 export function hasPersonalAccessToken(): boolean {
-  if (typeof window === "undefined") return false;
+  if (typeof window === 'undefined') return false;
   return !!localStorage.getItem(TOKEN_KEY);
 }

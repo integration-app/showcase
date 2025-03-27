@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 import {
   Select,
@@ -6,9 +6,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useConsoleEntry } from "@/hooks/use-console-entry";
-import { useCurrentWorkspace } from "../providers/workspace-provider";
+} from '@/components/ui/select';
+import { useConsoleEntry } from '@/hooks/use-console-entry';
+import { useCurrentWorkspace } from '../providers/workspace-provider';
 
 export const WorkspaceSelect = () => {
   const {
@@ -18,16 +18,16 @@ export const WorkspaceSelect = () => {
   } = useConsoleEntry();
   const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
 
-  const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || "");
+  const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || '');
 
   useEffect(() => {
     if (currentWorkspace?.id) {
-        setWorkspaceId(currentWorkspace.id)
+      setWorkspaceId(currentWorkspace.id);
     }
-  }, [currentWorkspace?.id])
+  }, [currentWorkspace?.id]);
 
   if (!currentWorkspace) {
-    return null
+    return null;
   }
 
   return (
@@ -40,11 +40,11 @@ export const WorkspaceSelect = () => {
       disabled={workspacesError || workspaceLoading}
     >
       <SelectTrigger
-        id="workspace"
-        className="max-w-28 min-w-12 w-full"
+        id='workspace'
+        className='max-w-28 min-w-12 w-full'
         loading={workspaceLoading}
       >
-        <SelectValue placeholder="Select a workspace" />
+        <SelectValue placeholder='Select a workspace' />
       </SelectTrigger>
       <SelectContent>
         {workspaces.map((ws) => (

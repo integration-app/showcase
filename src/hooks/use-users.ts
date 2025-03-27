@@ -4,15 +4,16 @@ import { authenticatedFetcher, buildAuthHeaders } from '@/lib/fetch-utils';
 import { useCustomer } from '@/components/providers/customer-provider';
 
 export function useUsers() {
-  const { customerId, customerName } = useCustomer()
+  const { customerId, customerName } = useCustomer();
 
   const { data, error, isLoading, mutate } = useSWR<UsersResponse>(
     '/api/users',
-    (url) => authenticatedFetcher<UsersResponse>(url, { customerId, customerName }),
+    (url) =>
+      authenticatedFetcher<UsersResponse>(url, { customerId, customerName }),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-    }
+    },
   );
 
   const importUsers = async () => {

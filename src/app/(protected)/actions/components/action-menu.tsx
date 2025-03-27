@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import { EllipsisVertical, Play } from "lucide-react";
+import { EllipsisVertical, Play } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ExecuteActionModal } from "./execute-action-modal";
-import { useState } from "react";
+} from '@/components/ui/dropdown-menu';
+import { ExecuteActionModal } from './execute-action-modal';
+import { useState } from 'react';
 
 export function ActionMenu({ id }: { id: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,7 @@ export function ActionMenu({ id }: { id: string }) {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent align='end'>
           <DropdownMenuItem onClick={() => setIsOpen(true)}>
             <Play /> Run action
           </DropdownMenuItem>

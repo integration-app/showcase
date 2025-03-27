@@ -1,38 +1,46 @@
-"use client"
+'use client';
 
-import { createContext, useCallback, useContext, useState } from "react"
-import { ConsoleEntry } from "@/types/console-entry"
-import { getStoredWorkspace, storeWorkspace, clearWorkspaceStorage } from "@/lib/workspace-storage"
+import { createContext, useCallback, useContext, useState } from 'react';
+import { ConsoleEntry } from '@/types/console-entry';
+import {
+  getStoredWorkspace,
+  storeWorkspace,
+  clearWorkspaceStorage,
+} from '@/lib/workspace-storage';
 
 interface WorkspaceContextType {
-  workspace: ConsoleEntry['workspace'] | null
-  saveWorkspace: (id: ConsoleEntry['workspace']) => void
-  clearWorkspace: () => void
+  workspace: ConsoleEntry['workspace'] | null;
+  saveWorkspace: (id: ConsoleEntry['workspace']) => void;
+  clearWorkspace: () => void;
 }
 
 const WorkspaceContext = createContext<WorkspaceContextType>({
   workspace: null,
   saveWorkspace: () => {},
-  clearWorkspace: () => {}
-})
+  clearWorkspace: () => {},
+});
 
 export function useCurrentWorkspace() {
-  return useContext(WorkspaceContext)
+  return useContext(WorkspaceContext);
 }
 
 export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
-  const [workspace, setWorkspace] = useState<WorkspaceContextType['workspace']>(getStoredWorkspace())
+  const [workspace, setWorkspace] =
+    useState<WorkspaceContextType['workspace']>(getStoredWorkspace());
 
-  const saveWorkspace = useCallback((workspace: WorkspaceContextType['workspace']) => {
-    if (!workspace) return
+  const saveWorkspace = useCallback(
+    (workspace: WorkspaceContextType['workspace']) => {
+      if (!workspace) return;
 
-    storeWorkspace(workspace)
-    setWorkspace(workspace)
-  }, [setWorkspace])
+      storeWorkspace(workspace);
+      setWorkspace(workspace);
+    },
+    [setWorkspace],
+  );
 
   const clearWorkspace = useCallback(() => {
-    if (typeof window !== "undefined") {
-      clearWorkspaceStorage()
+    if (typeof window !== 'undefined') {
+      clearWorkspaceStorage();
       setWorkspace(null);
     }
   }, [setWorkspace]);
@@ -42,10 +50,10 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       value={{
         workspace,
         saveWorkspace,
-        clearWorkspace
+        clearWorkspace,
       }}
     >
       {children}
     </WorkspaceContext.Provider>
-  )
+  );
 }

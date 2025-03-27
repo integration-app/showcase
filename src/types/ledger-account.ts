@@ -8,4 +8,4 @@ export interface LedgerAccount {
 
 export interface LedgerAccountsResponse {
   ledgerAccounts: LedgerAccount[];
-} 
+}

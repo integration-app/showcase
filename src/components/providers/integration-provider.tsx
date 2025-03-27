@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { IntegrationAppProvider } from "@integration-app/react";
-import { useCustomer } from "./customer-provider";
-import { getWorkspaceHeaders } from "@/lib/workspace-storage";
-import { useCurrentWorkspace } from "./workspace-provider";
-import { SWRConfig } from "swr";
-import { buildAuthHeaders } from "@/lib/fetch-utils";
+import { IntegrationAppProvider } from '@integration-app/react';
+import { useCustomer } from './customer-provider';
+import { getWorkspaceHeaders } from '@/lib/workspace-storage';
+import { useCurrentWorkspace } from './workspace-provider';
+import { SWRConfig } from 'swr';
+import { buildAuthHeaders } from '@/lib/fetch-utils';
 
 export function IntegrationProvider({
   children,
@@ -16,15 +16,15 @@ export function IntegrationProvider({
   const { customerId, customerName } = useCustomer();
 
   const fetchToken = async () => {
-    const response = await fetch("/api/integration-token", {
+    const response = await fetch('/api/integration-token', {
       headers: {
-        ...buildAuthHeaders({ customerId, customerName}),
+        ...buildAuthHeaders({ customerId, customerName }),
         ...getWorkspaceHeaders(),
       },
     });
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data.error || "Failed to fetch integration token");
+      throw new Error(data.error || 'Failed to fetch integration token');
     }
     return data.token;
   };

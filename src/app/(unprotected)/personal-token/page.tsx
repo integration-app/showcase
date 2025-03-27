@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -12,19 +12,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Eye, EyeOff } from "lucide-react";
-import { useConsoleAuth } from "@/components/providers/console-auth-provider";
+} from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { useConsoleAuth } from '@/components/providers/console-auth-provider';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useConsoleEntry } from "@/hooks/use-console-entry";
-import { useCurrentWorkspace } from "@/components/providers/workspace-provider";
+} from '@/components/ui/select';
+import { useConsoleEntry } from '@/hooks/use-console-entry';
+import { useCurrentWorkspace } from '@/components/providers/workspace-provider';
 
 enum Step {
   Token,
@@ -44,15 +44,15 @@ export default function PersonalTokenPage() {
   } = useConsoleEntry();
   const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
 
-  const [token, setToken] = useState(storedToken || "");
-  const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || "");
+  const [token, setToken] = useState(storedToken || '');
+  const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || '');
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(Step.Token);
   const [showToken, setShowToken] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const fromPath = searchParams.get("from") || "/";
+  const fromPath = searchParams.get('from') || '/';
 
   useEffect(() => {
     if (hasToken && currentWorkspace) {
@@ -64,7 +64,7 @@ export default function PersonalTokenPage() {
     e.preventDefault();
 
     if (!token.trim()) {
-      setError("Please enter a valid personal token");
+      setError('Please enter a valid personal token');
       return;
     }
 
@@ -78,7 +78,7 @@ export default function PersonalTokenPage() {
     e.preventDefault();
 
     if (!workspaceId) {
-      setError("Please select a workspace");
+      setError('Please select a workspace');
       return;
     }
 
@@ -95,12 +95,12 @@ export default function PersonalTokenPage() {
   };
 
   return (
-    <div className="container mx-auto flex items-center justify-center min-h-[80vh]">
+    <div className='container mx-auto flex items-center justify-center min-h-[80vh]'>
       {step === Step.Token && (
-        <form className="w-full" onSubmit={handleTokenSubmit}>
-          <Card className="w-full max-w-md mx-auto">
+        <form className='w-full' onSubmit={handleTokenSubmit}>
+          <Card className='w-full max-w-md mx-auto'>
             <CardHeader>
-              <CardTitle className="text-2xl">
+              <CardTitle className='text-2xl'>
                 Personal Access Token Required
               </CardTitle>
               <CardDescription>
@@ -110,36 +110,36 @@ export default function PersonalTokenPage() {
             </CardHeader>
             <CardContent>
               {error && (
-                <Alert variant="destructive" className="mb-4">
-                  <AlertCircle className="h-4 w-4" />
+                <Alert variant='destructive' className='mb-4'>
+                  <AlertCircle className='h-4 w-4' />
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="token">Personal Access Token</Label>
-                  <div className="flex items-center gap-2">
+              <div className='grid gap-4'>
+                <div className='grid gap-2'>
+                  <Label htmlFor='token'>Personal Access Token</Label>
+                  <div className='flex items-center gap-2'>
                     <Input
-                      id="token"
-                      type={showToken ? "text" : "password"}
-                      placeholder="Enter your personal token"
+                      id='token'
+                      type={showToken ? 'text' : 'password'}
+                      placeholder='Enter your personal token'
                       value={token}
                       onChange={(e) => setToken(e.target.value)}
-                      className="flex-1"
+                      className='flex-1'
                     />
                     <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
+                      type='button'
+                      variant='ghost'
+                      size='icon'
                       onClick={() => setShowToken(!showToken)}
                     >
                       {showToken ? (
-                        <EyeOff className="h-4 w-4" />
+                        <EyeOff className='h-4 w-4' />
                       ) : (
-                        <Eye className="h-4 w-4" />
+                        <Eye className='h-4 w-4' />
                       )}
-                      <span className="sr-only">
-                        {showToken ? "Hide token" : "Show token"}
+                      <span className='sr-only'>
+                        {showToken ? 'Hide token' : 'Show token'}
                       </span>
                     </Button>
                   </div>
@@ -147,7 +147,7 @@ export default function PersonalTokenPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button type="submit" className="w-full">
+              <Button type='submit' className='w-full'>
                 Continue
               </Button>
             </CardFooter>
@@ -156,62 +156,66 @@ export default function PersonalTokenPage() {
       )}
 
       {step === Step.Workspace && (
-        <form className="w-full" onSubmit={handleWorkspaceSubmit}>
-          <Card className="w-full max-w-md mx-auto">
+        <form className='w-full' onSubmit={handleWorkspaceSubmit}>
+          <Card className='w-full max-w-md mx-auto'>
             <CardHeader>
-              <CardTitle className="text-2xl">Select Workspace</CardTitle>
+              <CardTitle className='text-2xl'>Select Workspace</CardTitle>
               <CardDescription>Choose a workspace to continue</CardDescription>
             </CardHeader>
             <CardContent>
               {error && (
-                <Alert variant="destructive" className="mb-4">
-                  <AlertCircle className="h-4 w-4" />
+                <Alert variant='destructive' className='mb-4'>
+                  <AlertCircle className='h-4 w-4' />
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
               {workspacesError && (
-                <Alert variant="destructive" className="mb-4">
-                  <AlertCircle className="h-4 w-4" />
+                <Alert variant='destructive' className='mb-4'>
+                  <AlertCircle className='h-4 w-4' />
                   <AlertDescription>
                     Failed to fetch workspaces, check if token is correct
                   </AlertDescription>
                 </Alert>
               )}
 
-              <div className="grid gap-2">
-                <Label htmlFor="workspace">Workspace</Label>
+              <div className='grid gap-2'>
+                <Label htmlFor='workspace'>Workspace</Label>
                 <Select
-                    value={workspaceId}
-                    onValueChange={(id) => {
-                      setWorkspaceId(id);
-                      setError(null);
-                    }}
-                    disabled={workspacesError || workspaceLoading}
+                  value={workspaceId}
+                  onValueChange={(id) => {
+                    setWorkspaceId(id);
+                    setError(null);
+                  }}
+                  disabled={workspacesError || workspaceLoading}
+                >
+                  <SelectTrigger
+                    id='workspace'
+                    className='w-full'
+                    loading={workspaceLoading}
                   >
-                    <SelectTrigger id="workspace" className="w-full" loading={workspaceLoading}>
-                      <SelectValue placeholder="Select a workspace" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {workspaces.map((ws) => (
-                        <SelectItem key={ws.id} value={ws.id}>
-                          {ws.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <SelectValue placeholder='Select a workspace' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {workspaces.map((ws) => (
+                      <SelectItem key={ws.id} value={ws.id}>
+                        {ws.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </CardContent>
-            <CardFooter className="flex justify-between gap-2">
+            <CardFooter className='flex justify-between gap-2'>
               <Button
-                type="button"
-                variant="outline"
+                type='button'
+                variant='outline'
                 onClick={goBack}
-                className="flex-1"
+                className='flex-1'
               >
                 Back
               </Button>
-              <Button type="submit" className="flex-3">
+              <Button type='submit' className='flex-3'>
                 Continue
               </Button>
             </CardFooter>

@@ -13,10 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const auth = getAuthFromRequest(request);
     if (!auth.customerId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectDB();
@@ -31,7 +28,7 @@ export async function POST(request: NextRequest) {
     if (!firstConnection) {
       return NextResponse.json(
         { error: 'No apps connected to import users from' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -42,7 +39,7 @@ export async function POST(request: NextRequest) {
       .run();
 
     // Type assertion since we know the shape of the response
-    const externalUsers = (result.output.records as unknown as ExternalUser[]);
+    const externalUsers = result.output.records as unknown as ExternalUser[];
 
     // 4. Delete existing users for this customer
     await User.deleteMany({ customerId: auth.customerId });
@@ -53,7 +50,7 @@ export async function POST(request: NextRequest) {
         userId: extUser.id,
         userName: extUser.name,
         customerId: auth.customerId,
-      }))
+      })),
     );
 
     return NextResponse.json({ users }, { status: 200 });
@@ -61,7 +58,7 @@ export async function POST(request: NextRequest) {
     console.error('Error importing users:', error);
     return NextResponse.json(
       { error: 'Failed to import users' },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

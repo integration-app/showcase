@@ -5,14 +5,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { User } from "@/types/user"
-import { Skeleton } from "@/components/ui/skeleton"
+} from '@/components/ui/table';
+import { User } from '@/types/user';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface UsersTableProps {
-  users: User[]
-  isLoading?: boolean
-  isError?: Error | null
+  users: User[];
+  isLoading?: boolean;
+  isError?: Error | null;
 }
 
 export function UsersTable({
@@ -22,16 +22,16 @@ export function UsersTable({
 }: UsersTableProps) {
   if (isError) {
     return (
-      <div className="rounded-md border p-8 text-center">
-        <p className="text-muted-foreground">
+      <div className='rounded-md border p-8 text-center'>
+        <p className='text-muted-foreground'>
           Error loading users. Please try again later.
         </p>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="rounded-md border">
+    <div className='rounded-md border'>
       <Table>
         <TableHeader>
           <TableRow>
@@ -46,16 +46,16 @@ export function UsersTable({
             Array.from({ length: 5 }).map((_, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <Skeleton className="h-6 w-[200px]" />
+                  <Skeleton className='h-6 w-[200px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-6 w-[150px]" />
+                  <Skeleton className='h-6 w-[150px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-6 w-[100px]" />
+                  <Skeleton className='h-6 w-[100px]' />
                 </TableCell>
                 <TableCell>
-                  <Skeleton className="h-6 w-[100px]" />
+                  <Skeleton className='h-6 w-[100px]' />
                 </TableCell>
               </TableRow>
             ))
@@ -63,7 +63,7 @@ export function UsersTable({
             <TableRow>
               <TableCell
                 colSpan={4}
-                className="text-center text-muted-foreground"
+                className='text-center text-muted-foreground'
               >
                 No users found
               </TableCell>
@@ -71,8 +71,8 @@ export function UsersTable({
           ) : (
             users.map((user) => (
               <TableRow key={user.userId}>
-                <TableCell className="font-medium">{user.userId}</TableCell>
-                <TableCell>{user.userName || "-"}</TableCell>
+                <TableCell className='font-medium'>{user.userId}</TableCell>
+                <TableCell>{user.userName || '-'}</TableCell>
                 <TableCell>
                   {new Date(user.createdAt).toLocaleDateString()}
                 </TableCell>
@@ -85,5 +85,5 @@ export function UsersTable({
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

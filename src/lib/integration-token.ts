@@ -22,9 +22,13 @@ export class IntegrationTokenError extends Error {
   }
 }
 
-export async function generateIntegrationToken(details: CustomerDetails & WorkspaceAuthDetails): Promise<string> {
+export async function generateIntegrationToken(
+  details: CustomerDetails & WorkspaceAuthDetails,
+): Promise<string> {
   if (!details.workspaceKey || !details.workspaceSecret) {
-    throw new IntegrationTokenError('Integration.app credentials not configured');
+    throw new IntegrationTokenError(
+      'Integration.app credentials not configured',
+    );
   }
 
   try {
@@ -38,7 +42,7 @@ export async function generateIntegrationToken(details: CustomerDetails & Worksp
     const options = {
       issuer: details.workspaceKey,
       expiresIn: 7200, // 2 hours
-      algorithm: 'HS512' as Algorithm
+      algorithm: 'HS512' as Algorithm,
     };
 
     return jwt.sign(tokenData, details.workspaceSecret, options);
@@ -46,4 +50,4 @@ export async function generateIntegrationToken(details: CustomerDetails & Worksp
     console.error('Error generating integration token:', error);
     throw new IntegrationTokenError('Failed to generate integration token');
   }
-} 
+}
