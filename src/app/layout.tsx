@@ -2,17 +2,16 @@ import { ThemeProvider } from '@/components/providers/theme-provider';
 import { inter } from '@/lib/fonts';
 import { ConsoleAuthProvider } from '@/components/providers/console-auth-provider';
 import { WorkspaceProvider } from '@/components/providers/workspace-provider';
-import { ModeToggle } from '@/components/mode-toggle';
 
 import './globals.css';
 import '@integration-app/react/styles.css';
 
 export const metadata = {
   title: {
-    default: 'Use Case Template',
-    template: '%s | Use Case Template',
+    default: 'Showcase',
+    template: '%s | Showcase',
   },
-  description: 'Integration.app use case template application',
+  description: 'Integration.app Showcase',
 };
 
 export default function RootLayout({
@@ -23,14 +22,16 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased min-h-svh bg-background`}
+        className={`${inter.className} antialiased min-h-svh overflow-hidden bg-background`}
       >
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='light'
+          enableSystem={false}
+          forcedTheme='loght'
+        >
           <ConsoleAuthProvider>
-            <WorkspaceProvider>
-              {children}
-              <ModeToggle />
-            </WorkspaceProvider>
+            <WorkspaceProvider>{children}</WorkspaceProvider>
           </ConsoleAuthProvider>
         </ThemeProvider>
       </body>

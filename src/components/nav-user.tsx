@@ -22,23 +22,23 @@ import { useConsoleAuth } from './providers/console-auth-provider';
 import { useCurrentWorkspace } from './providers/workspace-provider';
 import { useRouter } from 'next/navigation';
 
-const useClearAuth = () => {
+export const useClearPat = () => {
   const { clearToken } = useConsoleAuth();
   const { clearWorkspace } = useCurrentWorkspace();
   const router = useRouter();
 
-  const clearAuth = () => {
+  const clearPat = () => {
     clearToken();
     clearWorkspace();
     router.push('/personal-token');
   };
 
-  return { clearAuth };
+  return { clearPat };
 };
 
 export function NavUser() {
   const { user } = useConsoleEntry();
-  const { clearAuth } = useClearAuth();
+  const { clearPat } = useClearPat();
   const { isMobile } = useSidebar();
 
   return (
@@ -84,7 +84,7 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={clearAuth}>
+            <DropdownMenuItem onClick={clearPat}>
               <LogOut />
               Log out
             </DropdownMenuItem>

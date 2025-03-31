@@ -41,7 +41,7 @@ export const WorkspaceSelect = () => {
     >
       <SelectTrigger
         id='workspace'
-        className='max-w-28 min-w-12 w-full'
+        className='max-w-50 min-w-12 w-full'
         loading={workspaceLoading}
       >
         <SelectValue placeholder='Select a workspace' />

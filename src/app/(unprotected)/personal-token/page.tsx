@@ -97,7 +97,11 @@ export default function PersonalTokenPage() {
   return (
     <div className='container mx-auto flex items-center justify-center min-h-[80vh]'>
       {step === Step.Token && (
-        <form className='w-full' onSubmit={handleTokenSubmit}>
+        <form
+          className='w-full'
+          onSubmit={handleTokenSubmit}
+          autoComplete='off'
+        >
           <Card className='w-full max-w-md mx-auto'>
             <CardHeader>
               <CardTitle className='text-2xl'>
@@ -126,6 +130,7 @@ export default function PersonalTokenPage() {
                       value={token}
                       onChange={(e) => setToken(e.target.value)}
                       className='flex-1'
+                      data-1p-ignore
                     />
                     <Button
                       type='button'
