@@ -28,7 +28,7 @@ export default function RootLayout({
           attribute='class'
           defaultTheme='light'
           enableSystem={false}
-          forcedTheme='loght'
+          forcedTheme='light'
         >
           <ConsoleAuthProvider>
             <WorkspaceProvider>{children}</WorkspaceProvider>

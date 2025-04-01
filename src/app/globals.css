@@ -1,16 +1,15 @@
+@layer
+iap_reset,
+theme,
+iap_base,
+base,
+components,
+iap_tokens,
+utilities,
+iap_recipes,
+iap_utilities;
+
 @import 'tailwindcss';
-
-@layer base {
-  @layer iap_reset, iap_base, iap_tokens;
-}
-
-@layer components {
-  @layer defaults, styling, elements, application;
-}
-
-@layer utilities {
-  @layer old_console_styles, iap_recipes, iap_utilities;
-}
 
 @import "tw-animate-css";
 
