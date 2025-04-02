@@ -12,10 +12,10 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-export function NavProjects({
-  projects,
+export function NavPages({
+  pages,
 }: {
-  projects: {
+  pages: {
     name: string;
     url: string;
     icon: LucideIcon;
@@ -25,9 +25,9 @@ export function NavProjects({
 
   return (
     <SidebarGroup className='group-data-[collapsible=icon]:hidden'>
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>Examples</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => (
+        {pages.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild isActive={pathname === item.url}>
               <Link href={item.url}>

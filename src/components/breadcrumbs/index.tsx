@@ -15,6 +15,7 @@ const mapping: Record<string, string> = {
   '': 'Showcase',
   integrations: 'Integrations',
   users: 'Users',
+  connections: 'Connections',
   actions: 'Actions',
 };
 
@@ -28,19 +29,21 @@ export const Breadcrumbs = () => {
         {patched.map((segment, index, source) => (
           <Fragment key={segment}>
             {index > 0 && <BreadcrumbSeparator className='hidden md:block' />}
+
             {index === source.length - 1 ? (
               <BreadcrumbItem>
-                <BreadcrumbPage>{mapping[segment] || ''}</BreadcrumbPage>
+                <BreadcrumbPage>{mapping[segment] || segment}</BreadcrumbPage>
               </BreadcrumbItem>
             ) : (
               <BreadcrumbLink asChild>
                 <Link
                   href={
-                    patched.toSpliced(index, source.length - index).join('/') ||
-                    '/'
+                    patched
+                      .toSpliced(index + 1, source.length - index)
+                      .join('/') || '../'
                   }
                 >
-                  {mapping[segment] || ''}
+                  {mapping[segment] || segment}
                 </Link>
               </BreadcrumbLink>
             )}

@@ -6,7 +6,13 @@ export const metadata: Metadata = {
   title: 'Actions',
 };
 
-export default function Actions() {
+export default async function Actions({
+  params,
+}: {
+  params: Promise<{ integrationKey: string }>;
+}) {
+  const { integrationKey } = await params;
+
   return (
     <div className='px-4 py-6 sm:px-0 flex flex-col gap-4'>
       <div className='flex flex-row justify-between items-center'>
@@ -15,7 +21,7 @@ export default function Actions() {
         </h1>
         <OpenGhButton metaUrl={import.meta.url} />
       </div>
-      <ActionsList />
+      <ActionsList integrationKey={integrationKey} />
     </div>
   );
 }

@@ -1,9 +1,14 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { OVERLAY_LINK_STYLES } from '@/helpers/common-styles';
+import { cn } from '@/lib/utils';
 import { useIntegrationApp, useIntegrations } from '@integration-app/react';
 import type { Integration as IntegrationAppIntegration } from '@integration-app/sdk';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export function IntegrationList() {
   const integrationApp = useIntegrationApp();
@@ -35,7 +40,7 @@ export function IntegrationList() {
       {integrations.map((integration) => (
         <li
           key={integration.key}
-          className='group flex items-center space-x-4 p-4 bg-card text-card-foreground border rounded-lg'
+          className='flex items-center space-x-4 p-4 bg-card text-card-foreground border rounded-lg relative group hover:border-primary'
         >
           <div className='shrink-0'>
             <Avatar size='lg' variant='square'>
@@ -45,12 +50,21 @@ export function IntegrationList() {
               </AvatarFallback>
             </Avatar>
           </div>
-          <div className='flex-1 min-w-0'>
-            <h3 className='text-lg leading-none font-semibold truncate'>
+          <div className='flex-1 min-w-0 flex flex-col gap-2'>
+            <Link
+              href={`/integrations/${integration.key}`}
+              className={cn(
+                'text-xl leading-none font-semibold flex flex-row gap-1 items-center group-hover:underline',
+                OVERLAY_LINK_STYLES,
+              )}
+            >
               {integration.name}
-            </h3>
+              <ArrowRight className='group-hover:opacity-100 opacity-10 transition-opacity' />
+            </Link>
+            <Badge variant='secondary'>{integration.key}</Badge>
           </div>
           <Button
+            className='z-10'
             variant={integration.connection ? 'destructive' : 'default'}
             onClick={() =>
               integration.connection

@@ -12,6 +12,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { VirtualWindow } from '@/components/virtual-window';
 import { cn } from '@/lib/utils';
 import { AdminControls } from '@/components/admin-contols';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata = {
   title: {
@@ -21,7 +22,7 @@ export const metadata = {
   description: 'Integration.app use case template application',
 };
 
-const FRAME_MARGIN_AROUND = '6rem';
+const FRAME_MARGIN_AROUND = '10rem';
 const FRAME_MARGIN_TOP = '10rem';
 const FRAME_WINDOW_HEADER_HEIGHT = '32px';
 
@@ -86,6 +87,7 @@ export default function RootLayout({
               </IntegrationProvider>
             </CustomerProvider>
           </ProtectedRoute>
+          <Toaster />
         </VirtualWindow>
       </div>
     </>
