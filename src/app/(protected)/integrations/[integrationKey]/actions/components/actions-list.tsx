@@ -1,6 +1,6 @@
 'use client';
 
-import { useActions } from '@integration-app/react';
+import { useActions, useIntegration } from '@integration-app/react';
 
 import {
   Table,
@@ -11,23 +11,22 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ActionExecutionTrigger } from './action-menu';
 import { Badge } from '@/components/ui/badge';
-import { ActionConnections } from './action-connections';
-import { ActionMenu } from './action-menu';
 
-export function ActionsList() {
-  const { actions, loading, error } = useActions();
+export function ActionsList({ integrationKey }: { integrationKey: string }) {
+  const { integration } = useIntegration(integrationKey);
+  const { actions, loading, error } = useActions({
+    integrationId: integration?.id || '',
+  });
 
   return (
     <div className='rounded-md border'>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>State</TableHead>
-            <TableHead>Deployed</TableHead>
-            <TableHead>Connections</TableHead>
-            <TableHead></TableHead>
+            <TableHead>Name & Key</TableHead>
+            <TableHead>Execute</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,19 +44,11 @@ export function ActionsList() {
           <>
             {actions.map((action) => (
               <TableRow key={action.id}>
-                <TableCell className='font-medium'>{action.name}</TableCell>
-                {/* @ts-expect-error bad types on action state */}
-                <TableCell>{action.state}</TableCell>
-                <TableCell>
-                  <Badge variant={action.isDeployed ? 'success' : 'secondary'}>
-                    {action.isDeployed ? 'Deployed' : 'Not Deployed'}
-                  </Badge>
+                <TableCell className='font-medium'>
+                  {action.name} <Badge variant='secondary'>{action.key}</Badge>
                 </TableCell>
                 <TableCell>
-                  <ActionConnections id={action.id} />
-                </TableCell>
-                <TableCell>
-                  <ActionMenu id={action.id} />
+                  <ActionExecutionTrigger actionId={action.id} />
                 </TableCell>
               </TableRow>
             ))}
@@ -68,12 +59,6 @@ export function ActionsList() {
               <TableRow key={index}>
                 <TableCell>
                   <Skeleton className='h-6 w-[200px]' />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className='h-6 w-[150px]' />
-                </TableCell>
-                <TableCell>
-                  <Skeleton className='h-6 w-[100px]' />
                 </TableCell>
                 <TableCell>
                   <Skeleton className='h-6 w-[100px]' />

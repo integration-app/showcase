@@ -10,13 +10,25 @@ import {
 const REPO_BASE_URL =
   'https://github.com/integration-app/showcase/tree/main/src';
 
-export const OpenGhButton = ({ metaUrl }: { metaUrl: string }) => {
+export const OpenGhButton = ({
+  metaUrl,
+  className,
+}: {
+  metaUrl: string;
+  className?: string;
+}) => {
   const filePath = metaUrl.split('/src')[1];
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant='outline' size='icon-sm' asChild disabled={!filePath}>
+        <Button
+          variant='outline'
+          size='icon-sm'
+          asChild
+          disabled={!filePath}
+          className={className}
+        >
           <a href={`${REPO_BASE_URL}${filePath}`} target='_blank'>
             <GithubIcon />
           </a>
