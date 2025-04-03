@@ -17,10 +17,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { useConsoleEntry } from '@/hooks/use-console-entry';
 import { useConsoleAuth } from './providers/console-auth-provider';
 import { useCurrentWorkspace } from './providers/workspace-provider';
 import { useRouter } from 'next/navigation';
+import { useCustomer } from './providers/customer-provider';
 
 export const useClearPat = () => {
   const { clearToken } = useConsoleAuth();
@@ -31,14 +31,14 @@ export const useClearPat = () => {
     clearToken();
     clearWorkspace();
     router.push('/personal-token');
+    localStorage.clear();
   };
 
   return { clearPat };
 };
 
 export function NavUser() {
-  const { user } = useConsoleEntry();
-  const { clearPat } = useClearPat();
+  const { setCustomerName, customerName, customerId } = useCustomer();
   const { isMobile } = useSidebar();
 
   return (
@@ -51,14 +51,14 @@ export function NavUser() {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                <AvatarImage src={undefined} alt={user?.name} />
+                <AvatarImage src={undefined} alt={customerName} />
                 <AvatarFallback className='rounded-lg'>
                   <User className='size-4' />
                 </AvatarFallback>
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-medium'>{user?.name}</span>
-                <span className='truncate text-xs'>{user?.email}</span>
+                <span className='truncate font-medium'>{customerName}</span>
+                <span className='truncate text-xs'>{customerId}</span>
               </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -72,19 +72,19 @@ export function NavUser() {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src={undefined} alt={user?.name} />
+                  <AvatarImage src={undefined} alt={customerName} />
                   <AvatarFallback className='rounded-lg'>
                     <User className='size-4' />
                   </AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-medium'>{user?.name}</span>
-                  <span className='truncate text-xs'>{user?.email}</span>
+                  <span className='truncate font-medium'>{customerName}</span>
+                  <span className='truncate text-xs'>{customerId}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={clearPat}>
+            <DropdownMenuItem onClick={() => setCustomerName(undefined)}>
               <LogOut />
               Log out
             </DropdownMenuItem>

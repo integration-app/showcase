@@ -20,7 +20,6 @@ export function useConsoleEntry(): Partial<ConsoleEntry> & {
   );
 
   return {
-    user: data?.user,
     workspaces: data?.workspaces,
     isLoading,
     isError: !!error,
