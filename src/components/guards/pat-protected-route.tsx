@@ -5,7 +5,7 @@ import { useConsoleAuth } from '@/components/providers/console-auth-provider';
 import { ReactNode, useEffect } from 'react';
 import { useCurrentWorkspace } from '@/components/providers/workspace-provider';
 
-export function ProtectedRoute({ children }: { children: ReactNode }) {
+export function PatProtectedRoute({ children }: { children: ReactNode }) {
   const { hasToken } = useConsoleAuth();
   const { workspace } = useCurrentWorkspace();
   const router = useRouter();

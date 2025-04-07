@@ -1,17 +1,23 @@
 'use client';
 
 import { createContext, useContext } from 'react';
-import { useConsoleEntry } from '@/hooks/use-console-entry';
-import { Loader, CircleX } from 'lucide-react';
+import { useLocalStorage } from '@uidotdev/usehooks';
+
+import { cyrb64Hash } from '@/helpers/hash';
 
 export interface CurrentCustomer {
   customerId: string | undefined;
   customerName: string | undefined;
 }
 
-const CustomerContext = createContext<CurrentCustomer>({
+interface CurrentUserContext extends CurrentCustomer {
+  setCustomerName: (name?: string) => void;
+}
+
+const CustomerContext = createContext<CurrentUserContext>({
   customerId: undefined,
   customerName: undefined,
+  setCustomerName: () => {},
 });
 
 export function useCustomer() {
@@ -19,31 +25,19 @@ export function useCustomer() {
 }
 
 export function CustomerProvider({ children }: { children: React.ReactNode }) {
-  const { user, isLoading, isError } = useConsoleEntry();
+  const [userEmail, setUserEmail] = useLocalStorage<string | undefined>(
+    'userEmail',
+    undefined,
+  );
 
-  if (isLoading) {
-    return (
-      <div className='w-screen h-screen flex justify-center items-center flex-col gap-4'>
-        <Loader className='size-14 opacity-50 animate-spin' />
-        <h1 className='text-xl'>Loading</h1>
-      </div>
-    );
-  }
-
-  if (!isLoading && isError) {
-    return (
-      <div className='w-screen h-screen flex justify-center items-center flex-col gap-4'>
-        <CircleX className='size-14' />
-        <h1 className='text-xl'>Failed to load customer</h1>
-      </div>
-    );
-  }
+  const userId = userEmail ? cyrb64Hash(userEmail) : undefined;
 
   return (
     <CustomerContext.Provider
       value={{
-        customerId: user?.id ?? undefined,
-        customerName: user?.name ?? undefined,
+        customerId: userId,
+        customerName: userEmail,
+        setCustomerName: (name?: string) => setUserEmail(name),
       }}
     >
       {children}

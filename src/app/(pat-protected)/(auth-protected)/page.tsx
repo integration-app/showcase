@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { OpenClient } from '../open-client';
+import { OpenClient } from '../../open-client';
 
 export const metadata: Metadata = {
   title: 'Overview',
