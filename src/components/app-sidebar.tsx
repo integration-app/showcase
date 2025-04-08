@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { LayoutDashboard, Blocks, Users } from 'lucide-react';
+import { LayoutDashboard, Blocks } from 'lucide-react';
 
 import { NavPages } from '@/components/nav-pages';
 import { NavUser } from '@/components/nav-user';
@@ -22,11 +22,6 @@ const pages = [
     name: 'Integrations',
     url: '/integrations',
     icon: Blocks,
-  },
-  {
-    name: 'Users',
-    url: '/users',
-    icon: Users,
   },
 ];
 

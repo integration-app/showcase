@@ -6,8 +6,8 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 import { cyrb64Hash } from '@/helpers/hash';
 
 export interface CurrentCustomer {
-  customerId: string | undefined;
-  customerName: string | undefined;
+  customerId: string | undefined | null;
+  customerName: string | undefined | null;
 }
 
 interface CurrentUserContext extends CurrentCustomer {
