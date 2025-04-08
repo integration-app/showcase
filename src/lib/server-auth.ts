@@ -1,10 +1,10 @@
 import { NextRequest } from 'next/server';
-import type { CustomerDetails } from './customer-details-storage';
 import { WorkspaceAuthDetails } from './integration-token';
+import { CurrentCustomer } from '@/components/providers/customer-provider';
 
 export function getAuthFromRequest(
   request: NextRequest,
-): CustomerDetails & WorkspaceAuthDetails {
+): CurrentCustomer & WorkspaceAuthDetails {
   return {
     customerId: request.headers.get('x-auth-id') ?? '',
     customerName: request.headers.get('x-customer-name') ?? null,

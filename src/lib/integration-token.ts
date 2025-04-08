@@ -1,9 +1,6 @@
 import jwt, { Algorithm } from 'jsonwebtoken';
-import type { CustomerDetails } from './customer-details-storage';
 
-// Your workspace credentials from Integration.app settings page
-// const WORKSPACE_KEY = process.env.INTEGRATION_APP_WORKSPACE_KEY;
-// const WORKSPACE_SECRET = process.env.INTEGRATION_APP_WORKSPACE_SECRET;
+import { CurrentCustomer } from '@/components/providers/customer-provider';
 
 interface TokenData {
   id: string;
@@ -23,12 +20,16 @@ export class IntegrationTokenError extends Error {
 }
 
 export async function generateIntegrationToken(
-  details: CustomerDetails & WorkspaceAuthDetails,
+  details: CurrentCustomer & WorkspaceAuthDetails,
 ): Promise<string> {
   if (!details.workspaceKey || !details.workspaceSecret) {
     throw new IntegrationTokenError(
       'Integration.app credentials not configured',
     );
+  }
+
+  if (!details.customerId || !details.customerName) {
+    throw new IntegrationTokenError('Customer details not provided');
   }
 
   try {
