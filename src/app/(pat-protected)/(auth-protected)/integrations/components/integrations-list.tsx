@@ -3,11 +3,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { OVERLAY_LINK_STYLES } from '@/helpers/common-styles';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { useIntegrationApp, useIntegrations } from '@integration-app/react';
 import type { Integration as IntegrationAppIntegration } from '@integration-app/sdk';
-import { ArrowRight } from 'lucide-react';
+import { CircleX, Cog, Unplug } from 'lucide-react';
 import Link from 'next/link';
 
 export function IntegrationList() {
@@ -34,48 +39,74 @@ export function IntegrationList() {
   };
 
   return (
-    <ul className='space-y-4 mt-8'>
-      {loading && <span>Loading</span>}
-      {!loading && !integrations.length && <span>No integrations found</span>}
-      {integrations.map((integration) => (
-        <li
-          key={integration.key}
-          className='flex items-center space-x-4 p-4 bg-card text-card-foreground border rounded-lg relative group hover:border-primary'
-        >
-          <div className='shrink-0'>
-            <Avatar size='lg' variant='square'>
-              <AvatarImage src={integration.logoUri} />
-              <AvatarFallback size='lg' variant='square'>
-                {integration.name[0]}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-          <div className='flex-1 min-w-0 flex flex-col gap-2'>
-            <Link
-              href={`/integrations/${integration.key}`}
-              className={cn(
-                'text-xl leading-none font-semibold flex flex-row gap-1 items-center group-hover:underline',
-                OVERLAY_LINK_STYLES,
-              )}
-            >
-              {integration.name}
-              <ArrowRight className='group-hover:opacity-100 opacity-10 transition-opacity' />
-            </Link>
-            <Badge variant='secondary'>{integration.key}</Badge>
-          </div>
-          <Button
-            className='z-10'
-            variant={integration.connection ? 'destructive' : 'default'}
-            onClick={() =>
-              integration.connection
-                ? handleDisconnect(integration)
-                : handleConnect(integration)
-            }
+    <TooltipProvider delayDuration={0}>
+      <ul className='space-y-4 mt-8 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
+        {loading && <span>Loading</span>}
+        {!loading && !integrations.length && <span>No integrations found</span>}
+        {integrations.map((integration) => (
+          <li
+            key={integration.key}
+            className='flex items-center space-x-4 p-4 bg-card text-card-foreground border rounded-lg h-full'
           >
-            {integration.connection ? 'Disconnect' : 'Connect'}
-          </Button>
-        </li>
-      ))}
-    </ul>
+            <div className='shrink-0'>
+              <Avatar size='lg' variant='square'>
+                <AvatarImage src={integration.logoUri} />
+                <AvatarFallback size='lg' variant='square'>
+                  {integration.name[0]}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            <div className='flex-1 min-w-0 flex flex-col gap-2'>
+              <span
+                className={cn(
+                  'text-xl leading-none font-semibold flex flex-row gap-1 items-center',
+                )}
+              >
+                {integration.name}
+              </span>
+              <Badge variant='secondary'>{integration.key}</Badge>
+            </div>
+            <div className='flex gap-2'>
+              {integration.connection && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant='outline' asChild>
+                      <Link
+                        href={`/integrations/${integration.key}`}
+                        className={cn(
+                          'text-xl leading-none font-semibold flex flex-row gap-1 items-center',
+                        )}
+                      >
+                        <Cog />
+                      </Link>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Configure</TooltipContent>
+                </Tooltip>
+              )}
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className='z-10'
+                    variant={integration.connection ? 'destructive' : 'default'}
+                    onClick={() =>
+                      integration.connection
+                        ? handleDisconnect(integration)
+                        : handleConnect(integration)
+                    }
+                  >
+                    {integration.connection ? <CircleX /> : <Unplug />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {integration.connection ? 'Disconnect' : 'Connect'}
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </TooltipProvider>
   );
 }
