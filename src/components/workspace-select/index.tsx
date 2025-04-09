@@ -17,6 +17,7 @@ export const WorkspaceSelect = () => {
     isLoading: workspaceLoading,
   } = useConsoleEntry();
   const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
+  console.log('workspaces', workspaces);
 
   const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || '');
 
@@ -47,11 +48,17 @@ export const WorkspaceSelect = () => {
         <SelectValue placeholder='Select a workspace' />
       </SelectTrigger>
       <SelectContent>
-        {workspaces.map((ws) => (
-          <SelectItem key={ws.id} value={ws.id}>
-            {ws.name}
-          </SelectItem>
-        ))}
+        {workspaces
+          .sort((left, right) => {
+            const leftUpdatedAt = new Date(left.updatedAt);
+            const rightUpdatedAt = new Date(right.updatedAt);
+            return rightUpdatedAt.getTime() - leftUpdatedAt.getTime();
+          })
+          .map((ws) => (
+            <SelectItem key={ws.id} value={ws.id}>
+              {ws.name}
+            </SelectItem>
+          ))}
       </SelectContent>
     </Select>
   );
