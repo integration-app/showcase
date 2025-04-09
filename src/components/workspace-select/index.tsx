@@ -17,7 +17,6 @@ export const WorkspaceSelect = () => {
     isLoading: workspaceLoading,
   } = useConsoleEntry();
   const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
-  console.log('workspaces', workspaces);
 
   const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || '');
 
