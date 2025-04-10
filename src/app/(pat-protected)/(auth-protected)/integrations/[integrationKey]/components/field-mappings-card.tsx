@@ -2,9 +2,9 @@
 
 import { usePathname } from 'next/navigation';
 import { LinkCard } from './link-card';
-import { useFlows } from '@integration-app/react';
+import { useFieldMappings } from '@integration-app/react';
 
-export const FlowsCard = ({
+export const FieldMappingsCard = ({
   integrationId,
   isConencted,
 }: {
@@ -12,15 +12,15 @@ export const FlowsCard = ({
   isConencted: boolean;
 }) => {
   const pathname = usePathname();
-  const { flows, loading } = useFlows({ integrationId });
+  const { fieldMappings, loading } = useFieldMappings({ integrationId });
 
   return (
     <LinkCard
       disabled={!isConencted}
       loading={loading}
-      href={`${pathname}/flows`}
-      itemName='Flows'
-      itemsCount={flows?.length}
+      href={`${pathname}/field-mappings`}
+      itemName='Field Mappings'
+      itemsCount={fieldMappings?.length}
     />
   );
 };

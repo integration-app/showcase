@@ -19,7 +19,7 @@ export const LinkCard = ({
 }: {
   href: string;
   itemName: string;
-  description: string;
+  description?: string;
   itemsCount: number;
   disabled?: boolean;
   loading?: boolean;
@@ -28,19 +28,25 @@ export const LinkCard = ({
     return <LoadingLinkCard description={description} />;
   }
 
+  if (!itemsCount) {
+    return null;
+  }
+
   const content = (
     <>
       <CardHeader>
-        <CardDescription className='group-hover:underline flex flex-row items-center gap-1'>
+        <CardDescription className='flex flex-row items-center gap-1 text-lg'>
           {itemName}
           <ArrowRight className='group-hover:opacity-100 opacity-10 transition-opacity size-4' />
         </CardDescription>
         <CardTitle>{itemsCount}</CardTitle>
       </CardHeader>
-      <CardFooter className='flex-col items-start gap-1 text-sm'>
-        <div className='line-clamp-1 flex gap-2 font-medium'>Description</div>
-        <div className='text-muted-foreground'>{description}</div>
-      </CardFooter>
+      {description && (
+        <CardFooter className='flex-col items-start gap-1 text-sm'>
+          <div className='line-clamp-1 flex gap-2 font-medium'>Description</div>
+          <div className='text-muted-foreground'>{description}</div>
+        </CardFooter>
+      )}
     </>
   );
 
@@ -67,7 +73,7 @@ export const LinkCard = ({
   );
 };
 
-export const LoadingLinkCard = ({ description }: { description: string }) => {
+export const LoadingLinkCard = ({ description }: { description?: string }) => {
   return (
     <Card className='relative group'>
       <CardHeader>
@@ -78,10 +84,12 @@ export const LoadingLinkCard = ({ description }: { description: string }) => {
           <Skeleton className='size-4' />
         </CardTitle>
       </CardHeader>
-      <CardFooter className='flex-col items-start gap-1 text-sm w-full'>
-        <div className='flex gap-2 font-medium'>Description</div>
-        <div className='text-muted-foreground w-full'>{description}</div>
-      </CardFooter>
+      {description && (
+        <CardFooter className='flex-col items-start gap-1 text-sm w-full'>
+          <div className='flex gap-2 font-medium'>Description</div>
+          <div className='text-muted-foreground w-full'>{description}</div>
+        </CardFooter>
+      )}
     </Card>
   );
 };

@@ -21,7 +21,6 @@ export const ActionsCard = ({
       href={`${pathname}/actions`}
       itemName='Actions'
       itemsCount={actions?.length}
-      description='Access and execute available actions'
     />
   );
 };
