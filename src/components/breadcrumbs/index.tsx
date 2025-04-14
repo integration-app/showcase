@@ -17,6 +17,8 @@ const mapping: Record<string, string> = {
   users: 'Users',
   connections: 'Connections',
   actions: 'Actions',
+  flows: 'Flows',
+  'data-sources': 'Data Sources',
 };
 
 export const Breadcrumbs = () => {
@@ -42,6 +44,7 @@ export const Breadcrumbs = () => {
                       .toSpliced(index + 1, source.length - index)
                       .join('/') || '../'
                   }
+                  className='capitalize'
                 >
                   {mapping[segment] || segment}
                 </Link>

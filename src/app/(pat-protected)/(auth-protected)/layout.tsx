@@ -10,6 +10,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { cn } from '@/lib/utils';
 import { CONTENT_MAX_HEIGHT } from '@/helpers/common-styles';
 import { UserAuthProtectedRoute } from '@/components/guards/user-auth-protected-route';
+import { FloatingPortalBoundary } from '@integration-app/react';
 
 export default function UserAuthProtectedLayout({
   children,
@@ -33,9 +34,11 @@ export default function UserAuthProtectedLayout({
               </div>
             </header>
 
-            <div className='flex flex-1 flex-col gap-4 p-4 pt-0 overflow-scroll'>
-              {children}
-            </div>
+            <FloatingPortalBoundary>
+              <div className='flex flex-1 flex-col gap-4 p-4 pt-0 overflow-scroll'>
+                {children}
+              </div>
+            </FloatingPortalBoundary>
           </SidebarInset>
         </SidebarProvider>
       </IntegrationProvider>
