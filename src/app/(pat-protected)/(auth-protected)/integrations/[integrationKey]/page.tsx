@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 
 import { ActionsCard } from './components/actions-card';
 import { FlowsCard } from './components/flows-card';
+import { FieldMappingsCard } from './components/field-mappings-card';
+import { DataSourcesCard } from './components/data-sources-card';
 
 export default function Connections() {
   const integrationApp = useIntegrationApp();
@@ -77,6 +79,14 @@ export default function Connections() {
           isConencted={!!integration.connection}
         />
         <FlowsCard
+          integrationId={integration.id}
+          isConencted={!!integration.connection}
+        />
+        <DataSourcesCard
+          integrationId={integration.id}
+          isConencted={!!integration.connection}
+        />
+        <FieldMappingsCard
           integrationId={integration.id}
           isConencted={!!integration.connection}
         />
