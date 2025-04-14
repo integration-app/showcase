@@ -1,3 +1,5 @@
+'use client';
+
 import { IntegrationProvider } from '@/components/providers/integration-provider';
 import { AppSidebar } from '@/components/app-sidebar';
 import { Separator } from '@/components/ui/separator';
