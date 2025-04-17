@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  useFieldMappings,
-  useIntegration,
-  useIntegrationApp,
-} from '@integration-app/react';
+import { useFieldMappings, useIntegration } from '@integration-app/react';
 
 import {
   Table,
@@ -15,23 +11,18 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FieldMappingConfigurationTrigger } from './field-mapping-config-trigger';
+import { CustomFieldMappingConfig } from './custom-field-mapping-config';
 import { Badge } from '@/components/ui/badge';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Button } from '@/components/ui/button';
-import { Cog } from 'lucide-react';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { EmbeddedFieldMappingConfig } from './embedded-field-mapping-config';
 
 export function FieldMappingsList({
   integrationKey,
 }: {
   integrationKey: string;
 }) {
-  const client = useIntegrationApp();
   const { integration } = useIntegration(integrationKey);
   const { fieldMappings, loading, error } = useFieldMappings({
     integrationId: integration?.id || '',
@@ -63,30 +54,23 @@ export function FieldMappingsList({
               {fieldMappings.map((fieldMapping) => (
                 <TableRow key={fieldMapping.id}>
                   <TableCell className='font-medium'>
-                    {fieldMapping.name}{' '}
-                    <Badge variant='secondary'>{fieldMapping.key}</Badge>
+                    <div className='flex gap-1'>
+                      <Link
+                        href={`/integrations/${integrationKey}/field-mappings/${fieldMapping.key}`}
+                        className='no-underline group flex gap-1 items-center'
+                      >
+                        {fieldMapping.name}
+                        <Badge variant='secondary'>{fieldMapping.key}</Badge>
+                        <ArrowRight className='group-hover:opacity-100 opacity-10 transition-opacity size-4' />
+                      </Link>
+                    </div>
                   </TableCell>
                   <TableCell className='flex gap-2'>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          variant='outline'
-                          onClick={() => {
-                            client
-                              .connection(integrationKey)
-                              .fieldMapping(fieldMapping.key)
-                              .openConfiguration();
-                          }}
-                        >
-                          <Cog />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent side='left'>
-                        Configure with prebuilt UI
-                      </TooltipContent>
-                    </Tooltip>
-
-                    <FieldMappingConfigurationTrigger
+                    <EmbeddedFieldMappingConfig
+                      integrationKey={integrationKey}
+                      fieldMappingKey={fieldMapping.key}
+                    />
+                    <CustomFieldMappingConfig
                       fieldMappingId={fieldMapping.id}
                       integrationId={integration?.id}
                     />

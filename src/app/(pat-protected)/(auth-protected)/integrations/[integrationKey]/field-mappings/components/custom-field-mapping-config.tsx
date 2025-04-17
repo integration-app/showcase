@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-export function FieldMappingConfigurationTrigger({
+export function CustomFieldMappingConfig({
   fieldMappingId,
   integrationId,
 }: {
@@ -24,12 +24,12 @@ export function FieldMappingConfigurationTrigger({
         integrationId={integrationId}
       >
         <TooltipTrigger asChild>
-          <Button variant='outline' onClick={() => {}}>
-            <TextCursorInput />
+          <Button variant='outline'>
+            <TextCursorInput /> Custom UI
           </Button>
         </TooltipTrigger>
       </ConfigureFieldMappingModal>
-      <TooltipContent side='right'>Configure with custom UI</TooltipContent>
+      <TooltipContent side='top'>Configure with custom UI</TooltipContent>
     </Tooltip>
   );
 }
