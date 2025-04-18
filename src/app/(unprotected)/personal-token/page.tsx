@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,15 +17,9 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { useConsoleAuth } from '@/components/providers/console-auth-provider';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useConsoleEntry } from '@/hooks/use-console-entry';
 import { useCurrentWorkspace } from '@/components/providers/workspace-provider';
+import { WorkspaceSelect } from '@/components/workspace-select';
 
 enum Step {
   Token,
@@ -37,15 +32,10 @@ export default function PersonalTokenPage() {
     token: storedToken,
     hasToken,
   } = useConsoleAuth();
-  const {
-    workspaces = [],
-    isError: workspacesError,
-    isLoading: workspaceLoading,
-  } = useConsoleEntry();
-  const { saveWorkspace, workspace: currentWorkspace } = useCurrentWorkspace();
+  const { isError: workspacesError } = useConsoleEntry();
+  const { workspace: currentWorkspace } = useCurrentWorkspace();
 
   const [token, setToken] = useState(storedToken || '');
-  const [workspaceId, setWorkspaceId] = useState(currentWorkspace?.id || '');
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(Step.Token);
   const [showToken, setShowToken] = useState(false);
@@ -53,12 +43,6 @@ export default function PersonalTokenPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const fromPath = searchParams.get('from') || '/';
-
-  useEffect(() => {
-    if (hasToken && currentWorkspace) {
-      router.push(fromPath);
-    }
-  }, [hasToken, currentWorkspace, router, fromPath]);
 
   const handleTokenSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,14 +61,16 @@ export default function PersonalTokenPage() {
   const handleWorkspaceSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!workspaceId) {
+    if (!currentWorkspace) {
       setError('Please select a workspace');
       return;
     }
 
-    const workspace = workspaces.find(({ id }) => id === workspaceId);
-
-    saveWorkspace(workspace!);
+    if (!hasToken) {
+      setError('Please enter a valid personal token');
+      setStep(Step.Token);
+      return;
+    }
 
     router.push(fromPath);
   };
@@ -186,37 +172,7 @@ export default function PersonalTokenPage() {
 
               <div className='grid gap-2'>
                 <Label htmlFor='workspace'>Workspace</Label>
-                <Select
-                  value={workspaceId}
-                  onValueChange={(id) => {
-                    setWorkspaceId(id);
-                    setError(null);
-                  }}
-                  disabled={workspacesError || workspaceLoading}
-                >
-                  <SelectTrigger
-                    id='workspace'
-                    className='w-full'
-                    loading={workspaceLoading}
-                  >
-                    <SelectValue placeholder='Select a workspace' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {workspaces
-                      .sort((left, right) => {
-                        const leftUpdatedAt = new Date(left.updatedAt);
-                        const rightUpdatedAt = new Date(right.updatedAt);
-                        return (
-                          rightUpdatedAt.getTime() - leftUpdatedAt.getTime()
-                        );
-                      })
-                      .map((ws) => (
-                        <SelectItem key={ws.id} value={ws.id}>
-                          {ws.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
+                <WorkspaceSelect span='full' />
               </div>
             </CardContent>
             <CardFooter className='flex justify-between gap-2'>
