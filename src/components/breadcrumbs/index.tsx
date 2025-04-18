@@ -19,6 +19,7 @@ const mapping: Record<string, string> = {
   actions: 'Actions',
   flows: 'Flows',
   'data-sources': 'Data Sources',
+  'field-mappings': 'Field Mappings',
 };
 
 export const Breadcrumbs = () => {
