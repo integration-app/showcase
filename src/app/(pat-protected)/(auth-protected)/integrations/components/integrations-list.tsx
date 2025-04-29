@@ -12,7 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useIntegrationApp, useIntegrations } from '@integration-app/react';
 import type { Integration as IntegrationAppIntegration } from '@integration-app/sdk';
-import { CircleX, Cog, Unplug } from 'lucide-react';
+import { ArrowRight, CircleX, Unplug } from 'lucide-react';
 import Link from 'next/link';
 
 export function IntegrationList() {
@@ -40,7 +40,7 @@ export function IntegrationList() {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <ul className='space-y-4 mt-8 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4'>
+      <ul className='space-y-4 mt-8 grid grid-cols-1 xl:grid-cols-2 gap-4'>
         {loading && <span>Loading</span>}
         {!loading && !integrations.length && <span>No integrations found</span>}
         {integrations.map((integration) => (
@@ -68,21 +68,11 @@ export function IntegrationList() {
             </div>
             <div className='flex gap-2'>
               {integration.connection && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant='outline' asChild>
-                      <Link
-                        href={`/integrations/${integration.key}`}
-                        className={cn(
-                          'text-xl leading-none font-semibold flex flex-row gap-1 items-center',
-                        )}
-                      >
-                        <Cog />
-                      </Link>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Configure</TooltipContent>
-                </Tooltip>
+                <Button variant='outline' asChild>
+                  <Link href={`/integrations/${integration.key}`}>
+                    Open <ArrowRight />
+                  </Link>
+                </Button>
               )}
 
               <Tooltip>
@@ -96,7 +86,14 @@ export function IntegrationList() {
                         : handleConnect(integration)
                     }
                   >
-                    {integration.connection ? <CircleX /> : <Unplug />}
+                    {integration.connection ? (
+                      <CircleX />
+                    ) : (
+                      <>
+                        Connect
+                        <Unplug />
+                      </>
+                    )}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>

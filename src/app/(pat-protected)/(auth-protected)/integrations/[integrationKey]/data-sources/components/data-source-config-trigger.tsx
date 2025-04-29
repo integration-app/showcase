@@ -4,11 +4,6 @@ import { TextCursorInput } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ConfigureDataSourceModal } from './configure-data-source-modal';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 
 export function DataSourceConfigurationTrigger({
   dataSourceId,
@@ -18,15 +13,10 @@ export function DataSourceConfigurationTrigger({
   integrationId?: string;
 }) {
   return (
-    <Tooltip>
-      <ConfigureDataSourceModal id={dataSourceId} integrationId={integrationId}>
-        <TooltipTrigger asChild>
-          <Button variant='outline' onClick={() => {}}>
-            <TextCursorInput />
-          </Button>
-        </TooltipTrigger>
-      </ConfigureDataSourceModal>
-      <TooltipContent side='right'>Configure with custom UI</TooltipContent>
-    </Tooltip>
+    <ConfigureDataSourceModal id={dataSourceId} integrationId={integrationId}>
+      <Button variant='outline' onClick={() => {}}>
+        <TextCursorInput /> Configure with custom UI
+      </Button>
+    </ConfigureDataSourceModal>
   );
 }
