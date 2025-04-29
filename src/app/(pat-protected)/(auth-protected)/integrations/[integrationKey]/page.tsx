@@ -12,6 +12,7 @@ import { ActionsCard } from './components/actions-card';
 import { FlowsCard } from './components/flows-card';
 import { FieldMappingsCard } from './components/field-mappings-card';
 import { DataSourcesCard } from './components/data-sources-card';
+import { CircleX, Cog, Unplug } from 'lucide-react';
 
 export default function Connections() {
   const integrationApp = useIntegrationApp();
@@ -47,7 +48,7 @@ export default function Connections() {
 
   return (
     <div className='px-4 py-6 sm:px-0 flex flex-col gap-8'>
-      <div className='flex flex-row justify-start gap-4 items-center'>
+      <div className='flex flex-row justify-start gap-2 items-center'>
         <div className='shrink-0'>
           <Avatar size='lg' variant='square'>
             <AvatarImage src={integration.logoUri} />
@@ -59,6 +60,16 @@ export default function Connections() {
         <h1 className='text-3xl flex-1 font-bold text-primary'>
           {integration.name}
         </h1>
+
+        {integration.connection ? (
+          <Button
+            className='z-10'
+            variant='outline'
+            onClick={() => integrationApp.integration(integration.key).open()}
+          >
+            Configure <Cog />
+          </Button>
+        ) : null}
         <Button
           className='z-10'
           variant={integration.connection ? 'destructive' : 'default'}
@@ -68,12 +79,22 @@ export default function Connections() {
               : handleConnect(integration)
           }
         >
-          {integration.connection ? 'Disconnect' : 'Connect'}
+          {integration.connection ? (
+            <>
+              Disconnect
+              <CircleX />
+            </>
+          ) : (
+            <>
+              Connect
+              <Unplug />
+            </>
+          )}
         </Button>
         <OpenGhButton metaUrl={import.meta.url} />
       </div>
 
-      <div className='grid grid-cols-2 xl:grid-cols-3 gap-4'>
+      <div className='grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>
         <ActionsCard
           integrationId={integration.id}
           isConencted={!!integration.connection}
