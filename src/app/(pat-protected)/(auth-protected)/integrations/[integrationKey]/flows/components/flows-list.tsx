@@ -19,6 +19,7 @@ import { FlowExecutionTrigger } from './flow-menu';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TextCursorInput, Workflow } from 'lucide-react';
+import Link from 'next/link';
 
 export function FlowsList({ integrationKey }: { integrationKey: string }) {
   const client = useIntegrationApp();
@@ -78,6 +79,14 @@ export function FlowsList({ integrationKey }: { integrationKey: string }) {
                     }}
                   >
                     <Workflow /> Edit flow
+                  </Button>
+
+                  <Button variant='outline' asChild>
+                    <Link
+                      href={`/integrations/${integrationKey}/flows/${flow.key}/builder`}
+                    >
+                      <Workflow /> Embeded flow editor
+                    </Link>
                   </Button>
                 </TableCell>
                 <TableCell>
