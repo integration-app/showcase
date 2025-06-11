@@ -29,7 +29,7 @@ export const OpenGhButton = ({
           disabled={!filePath}
           className={className}
         >
-          <a href={`${REPO_BASE_URL}${filePath}`} target='_blank'>
+          <a href={encodeURI(`${REPO_BASE_URL}${filePath}`)} target='_blank'>
             <GithubIcon />
           </a>
         </Button>
